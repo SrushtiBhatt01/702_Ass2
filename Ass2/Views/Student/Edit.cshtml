@@ -1,0 +1,71 @@
+﻿@model Ass2.Models.Student
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Student</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StudentID" class="control-label"></label>
+                <input asp-for="StudentID" class="form-control" />
+                <span asp-validation-for="StudentID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label><br />
+                <label class="radio-inline">
+                    <input asp-for="Gender" type="radio" value="Male" /> Male
+                </label>
+                <label class="radio-inline">
+                    <input asp-for="Gender" type="radio" value="Female" /> Female
+                </label>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Hobbies</label>
+                <div>
+                    @foreach (var hobby in ViewBag.Hobbies)
+                    {
+                        var isChecked = Model.Hobbies.Contains(hobby); // Check if the hobby is selected
+
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="Hobbies" value="@hobby" @(isChecked ? "checked" : "") /> @hobby
+                            </label>
+                        </div>
+                    }
+                </div>
+                <span asp-validation-for="Hobbies" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
